@@ -1,8 +1,7 @@
 const express = require('express');
 const app = express();
 
-const bodyParser = require('body-parser');
-app.use(bodyParser.json())
+app.use(express.json())
 
 const mockUserData=[
   {name: 'Mark'},
@@ -43,6 +42,28 @@ app.post('/login', function(req, res){
     res.json({
       success: false,
       message: 'password and username do not match'
+    })
+  }
+})
+
+app.post('/signup', function(req, res){
+  const username = req.body.username;
+  const password = req.body.password;
+
+  if (username.length < 5){
+    res.json({
+      success: false,
+      message: 'username must be at least 5 characters'
+    })
+  } else if (password.length < 8){
+    res.json({
+      success: false,
+      message: 'password must be at least 8 characters'
+    })
+  } else {
+    res.json({
+      success: true,
+      message: 'account created!'
     })
   }
 })
